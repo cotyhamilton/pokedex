@@ -171,7 +171,8 @@ span.fairy {
     height: 15vh;
     justify-content: space-between;
     min-height: 6.5em;
-    margin: 1.8em 2em;
+    margin-bottom: 1.8em;
+    margin-top: 1.8em;
     display: flex;
 }
 
@@ -213,9 +214,9 @@ span.fairy {
 }
 
 @media screen and (min-width: 800px) {
-    .card {
+    /* .card {
         width: 50%;
         margin-left: auto;
         margin-right: auto;
-    }
+    } */
   }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import Card from './Card'
+import Card from './Card';
+import { Icon, Input } from 'semantic-ui-react';
 
 const Pokedex = require('pokeapi-js-wrapper');
 const P = new Pokedex.Pokedex();
@@ -40,9 +41,13 @@ function App() {
 
   return (
     <div className="App">
+      <header>
+        <Icon className="icon" name="sliders" size="large" />
+      </header>
       <div className="home">
-        <h2>Pokedex</h2>
+        <h1>Pokédex</h1>
         <p>Search for pokemon by name or using the National Pokedex number</p>
+        <Input fluid icon="search" iconPosition="left" placeholder="What Pokémon are you looking for?" />
         {pokemon.length ? pokemon.map((pokemon, index) => (
           !!pokemonData[pokemon.name] ?
             <Card
