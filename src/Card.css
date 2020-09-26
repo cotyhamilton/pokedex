@@ -170,6 +170,7 @@ span.fairy {
     box-shadow: 0px 10px 20px #ddd;
     height: 15vh;
     justify-content: space-between;
+    min-height: 6.5em;
     margin: 1.8em 2em;
     display: flex;
 }
