@@ -1,0 +1,2 @@
+export const IMG_DETAIL_URL = 'https://raw.githubusercontent.com/cotyhamilton/pokemon/master/img/detail';
+export const IMG_FULL_URL = 'https://raw.githubusercontent.com/cotyhamilton/pokemon/master/img/full';

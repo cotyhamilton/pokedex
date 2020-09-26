@@ -1,0 +1,220 @@
+div.normal {
+    background: #A8A77A;
+    
+}
+
+div.fire {
+    background: #EE8130;
+    
+}
+
+div.water {
+    background: #6390F0;
+    
+}
+
+div.electric {
+    background: #F7D02C;
+    
+}
+
+div.grass {
+    background: #7AC74C;
+    
+}
+
+div.ice {
+    background: #96D9D6;
+    
+}
+
+div.fighting {
+    background: #C22E28;
+    
+}
+
+div.poison {
+    background: #A33EA1;
+    
+}
+
+div.ground {
+    background: #E2BF65;
+    
+}
+
+div.flying {
+    background: #A98FF3;
+    
+}
+
+div.psychic {
+    background: #F95587;
+    
+}
+
+div.bug {
+    background: #A6B91A;
+    
+}
+
+div.rock {
+    background: #B6A136;
+    
+}
+
+div.ghost {
+    background: #735797;
+    
+}
+
+div.dragon {
+    background: #6F35FC;
+    
+}
+
+div.dark {
+    background: #705746;
+    
+}
+
+div.steel {
+    background: #B7B7CE;
+    
+}
+
+div.fairy {
+    background: #D685AD;
+    
+}
+
+/* --- */
+
+span.normal {
+    color: #A8A77A;
+}
+
+span.fire {
+    color: #EE8130;
+}
+
+span.water {
+    color: #6390F0;
+}
+
+span.electric {
+    color: #F7D02C;
+}
+
+span.grass {
+    color: #7AC74C;
+}
+
+span.ice {
+    color: #96D9D6;
+}
+
+span.fighting {
+    color: #C22E28;
+}
+
+span.poison {
+    color: #A33EA1;
+}
+
+span.ground {
+    color: #E2BF65;
+}
+
+span.flying {
+    color: #A98FF3;
+}
+
+span.psychic {
+    color: #F95587;
+}
+
+span.bug {
+    color: #A6B91A;
+}
+
+span.rock {
+    color: #B6A136;
+}
+
+span.ghost {
+    color: #735797;
+}
+
+span.dragon {
+    color: #6F35FC;
+}
+
+span.dark {
+    color: #705746;
+}
+
+span.steel {
+    color: #B7B7CE;
+}
+
+span.fairy {
+    color: #D685AD;
+}
+
+/* --- */
+
+.card {
+    align-items: center;
+    border-radius: .6em;
+    box-shadow: 0px 10px 20px #ddd;
+    height: 15vh;
+    justify-content: space-between;
+    margin: 1.8em 2em;
+    display: flex;
+}
+
+.name {
+    color: white;
+    cursor: pointer;
+    font-size: 1.4em;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.details {
+    padding: 1em 2em;
+}
+
+.details p {
+    margin: auto;
+}
+
+.id {
+    font-size: .7em;
+    font-weight: 700;
+    padding-left: .2em;
+}
+
+.img {
+    height: 120%;
+    margin-bottom: 2em;
+}
+
+.type {
+    font-size: .8em;
+    -webkit-text-stroke: 2px #ffffff;
+    margin: -2px;
+}
+
+.types {
+    padding-left: 2px;
+}
+
+@media screen and (min-width: 800px) {
+    .card {
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+  }
