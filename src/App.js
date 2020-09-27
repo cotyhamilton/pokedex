@@ -3,7 +3,7 @@ import './App.css';
 import Card from './Card';
 import { Icon, Input } from 'semantic-ui-react';
 import Worker from 'workerize-loader!./workers/Worker'; // eslint-disable-line import/no-webpack-loader-syntax
-import WorkerPool  from './workers/WorkerPool';
+import WorkerPool from './workers/WorkerPool';
 
 const Pokedex = require('pokeapi-js-wrapper');
 const P = new Pokedex.Pokedex();
@@ -16,6 +16,7 @@ function App() {
   const [limit] = useState(50);
   const [pokemonData, setPokemonData] = useState({});
   const [allPokemon, setAllPokemon] = useState([]);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     getPokemon();
@@ -40,6 +41,19 @@ function App() {
       ));
     }
   }, [allPokemon]);
+
+  useEffect(() => {
+    if (search === '') {
+      const list = allPokemon.slice(offset, offset + limit);
+      setPokemon((prevState) => ([...list]));
+    }
+    else {
+      const result = allPokemon.filter((pokemon, index) => (
+        pokemon.name.includes(search) || (index + 1).toString().includes(search)
+      ));
+      setPokemon((prevState) => ([...result]))
+    }
+  }, [search]);
 
   const getPokemon = async () => {
     if (allPokemon.length > offset + limit) {
@@ -74,6 +88,10 @@ function App() {
     setPokemonData((prevState) => ({ ...prevState, [data.name]: data }))
   }
 
+  const handleChange = event => {
+    setSearch(event.target.value);
+  };
+
   return (
     <div className="App">
       <header>
@@ -81,18 +99,26 @@ function App() {
       </header>
       <div className="home">
         <h1>Pokédex</h1>
-        <p>Search for pokemon by name or using the National Pokedex number</p>
-        <Input fluid icon="search" iconPosition="left" placeholder="What Pokémon are you looking for?" />
+        <p>Search for Pokémon by name or using the National Pokédex number</p>
+        <Input
+          fluid
+          icon="search"
+          iconPosition="left"
+          placeholder="What Pokémon are you looking for?"
+          onChange={handleChange}
+        />
         {pokemon.length ? pokemon.map((pokemon, index) => (
           !!pokemonData[pokemon.name] ?
             <Card
               details={!!pokemonData[pokemon.name] ? pokemonData[pokemon.name] : null}
             /> : null
-        )): null }
+        )) : null}
       </div>
-      <div className="page-navigation">
-        <span onClick={loadMore}>more</span>
-      </div>
+      {search === '' ?
+        <div className="page-navigation">
+          <span onClick={loadMore}>more</span>
+        </div>
+        : null}
     </div>
   );
 }

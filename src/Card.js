@@ -19,7 +19,7 @@ function Card ({details}) {
                     </div>
                 </div>
             </div>
-            <img className="img" src={`${IMG_DETAIL_URL}/${details.id}.png`} />
+            {details.id >= 10000 ? null : <img className="img" src={`${IMG_DETAIL_URL}/${details.id}.png`} />}
         </div>
     );
 }
