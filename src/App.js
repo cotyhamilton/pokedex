@@ -4,6 +4,7 @@ import Card from './Card';
 import { Icon, Input } from 'semantic-ui-react';
 import Worker from 'workerize-loader!./workers/Worker'; // eslint-disable-line import/no-webpack-loader-syntax
 import WorkerPool from './workers/WorkerPool';
+import { TYPES } from './lib/constants';
 
 const Pokedex = require('pokeapi-js-wrapper');
 const P = new Pokedex.Pokedex();
@@ -17,6 +18,7 @@ function App() {
   const [pokemonData, setPokemonData] = useState({});
   const [allPokemon, setAllPokemon] = useState([]);
   const [search, setSearch] = useState('');
+  const [pokemonByType, setPokemonByType] = useState({});
 
   useEffect(() => {
     getPokemon();
@@ -43,15 +45,26 @@ function App() {
   }, [allPokemon]);
 
   useEffect(() => {
+    TYPES.map((type) => {
+      updatePokemonByType(type);
+    })
+  }, [])
+
+  useEffect(() => {
     if (search === '') {
       const list = allPokemon.slice(offset, offset + limit);
       setPokemon((prevState) => ([...list]));
     }
     else {
-      const result = allPokemon.filter((pokemon, index) => (
-        pokemon.name.includes(search.toLowerCase()) || (index + 1).toString().includes(search)
-      ));
-      setPokemon((prevState) => ([...result]))
+      if (TYPES.includes(search.toLowerCase())) {
+        setPokemon([...pokemonByType[search.toLowerCase()]]);
+      }
+      else {
+        const result = allPokemon.filter((pokemon, index) => {
+          return pokemon.name.includes(search.toLowerCase()) || (index + 1).toString().includes(search);
+        });
+        setPokemon([...result]);
+      }
     }
   }, [search]);
 
@@ -90,7 +103,16 @@ function App() {
 
   const handleChange = event => {
     setSearch(event.target.value);
-  };
+  }
+
+  const updatePokemonByType = async (type) => {
+    let list = [];
+    const data = await P.getTypeByName(type);
+    data.pokemon.map((pokemon) => {
+      list.push(pokemon.pokemon);
+    })
+    setPokemonByType((prevState) => ({...prevState, [type]: list}))
+  }
 
   return (
     <div className="App">
