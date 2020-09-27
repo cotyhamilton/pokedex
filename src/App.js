@@ -8,7 +8,7 @@ import WorkerPool from './workers/WorkerPool';
 const Pokedex = require('pokeapi-js-wrapper');
 const P = new Pokedex.Pokedex();
 
-let workers = WorkerPool(Worker, navigator.hardwareConcurrency || 4);
+let workers = WorkerPool(Worker, navigator.hardwareConcurrency > 4 ? navigator.hardwareConcurrency : 4);
 
 function App() {
   const [pokemon, setPokemon] = useState([]);
