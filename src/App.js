@@ -49,7 +49,7 @@ function App() {
     }
     else {
       const result = allPokemon.filter((pokemon, index) => (
-        pokemon.name.includes(search) || (index + 1).toString().includes(search)
+        pokemon.name.includes(search.toLowerCase()) || (index + 1).toString().includes(search)
       ));
       setPokemon((prevState) => ([...result]))
     }
