@@ -2,15 +2,20 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Card from './Card';
 import { Icon, Input } from 'semantic-ui-react';
+import Worker from 'workerize-loader!./workers/Worker'; // eslint-disable-line import/no-webpack-loader-syntax
+import WorkerPool  from './workers/WorkerPool';
 
 const Pokedex = require('pokeapi-js-wrapper');
 const P = new Pokedex.Pokedex();
+
+let workers = WorkerPool(Worker, 4);
 
 function App() {
   const [pokemon, setPokemon] = useState([]);
   const [offset, setOffset] = useState(0);
   const [limit] = useState(15);
   const [pokemonData, setPokemonData] = useState({});
+  const [allPokemon, setAllPokemon] = useState([]);
 
   useEffect(() => {
     getPokemon();
@@ -22,21 +27,45 @@ function App() {
         getPokemonData(pokemon.name);
       })
     }
-  }, [pokemon])
+  }, [pokemon]);
+
+  useEffect(() => {
+    getAllPokemon();
+  }, []);
+
+  useEffect(() => {
+    if (allPokemon.length) {
+      allPokemon.map((pokemon) => (
+        workerFetch(pokemon)
+      ));
+    }
+  }, [allPokemon]);
 
   const getPokemon = async () => {
-    const options = { offset, limit }
-    const list = await P.getPokemonsList(options)
+    const options = { offset, limit };
+    const list = await P.getPokemonsList(options);
     setPokemon((prevState) => ([...prevState, ...list.results]));
-  };
+  }
 
   const getPokemonData = async (pokemon) => {
-    const data = await P.getPokemonByName(pokemon);
-    setPokemonData((prevState) => ({ ...prevState, [data.name]: data }))
+    if (!pokemonData.pokemon) {
+      const data = await P.getPokemonByName(pokemon);
+      setPokemonData((prevState) => ({ ...prevState, [data.name]: data }))
+    }
+  }
+
+  const getAllPokemon = async () => {
+    const list = await P.getPokemonsList();
+    setAllPokemon([...list.results]);
   }
 
   const loadMore = async () => {
     await setOffset(offset + limit);
+  }
+
+  const workerFetch = async (pokemon) => {
+    const data = await workers.fetch(pokemon);
+    setPokemonData((prevState) => ({ ...prevState, [data.name]: data }))
   }
 
   return (
