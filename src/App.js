@@ -13,7 +13,7 @@ let workers = WorkerPool(Worker, 4);
 function App() {
   const [pokemon, setPokemon] = useState([]);
   const [offset, setOffset] = useState(0);
-  const [limit] = useState(15);
+  const [limit] = useState(50);
   const [pokemonData, setPokemonData] = useState({});
   const [allPokemon, setAllPokemon] = useState([]);
 
@@ -42,9 +42,15 @@ function App() {
   }, [allPokemon]);
 
   const getPokemon = async () => {
-    const options = { offset, limit };
-    const list = await P.getPokemonsList(options);
-    setPokemon((prevState) => ([...prevState, ...list.results]));
+    if (allPokemon.length > offset + limit) {
+      const list = allPokemon.slice(offset, offset + limit);
+      setPokemon((prevState) => ([...prevState, ...list]));
+    }
+    else {
+      const options = { offset, limit };
+      const list = await P.getPokemonsList(options);
+      setPokemon((prevState) => ([...prevState, ...list.results]));
+    }
   }
 
   const getPokemonData = async (pokemon) => {
