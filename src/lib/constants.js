@@ -18,3 +18,5 @@ export const TYPES = [
     "dark",
     "fairy"
 ]
+
+export const GENERATIONS = 8;
