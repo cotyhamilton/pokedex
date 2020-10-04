@@ -1,5 +1,5 @@
 import React from 'react';
-import { IMG_DETAIL_URL } from './config'
+import { IMG_DETAIL_URL } from '../../config'
 import './Card.css'
 
 const synth = window.speechSynthesis;

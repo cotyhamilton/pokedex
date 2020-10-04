@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import Card from './Card';
+import Card from './components/Card';
 import { Icon, Input } from 'semantic-ui-react';
-import Worker from 'workerize-loader!./workers/Worker'; // eslint-disable-line import/no-webpack-loader-syntax
-import WorkerPool from './workers/WorkerPool';
+import Worker from 'workerize-loader!./lib/workers/Worker'; // eslint-disable-line import/no-webpack-loader-syntax
+import WorkerPool from './lib/workers/WorkerPool';
 import { TYPES, GENERATIONS } from './lib/constants';
 
 const Pokedex = require('pokeapi-js-wrapper');
