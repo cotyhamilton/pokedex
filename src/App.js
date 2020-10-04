@@ -25,20 +25,20 @@ function App() {
 
   useEffect(() => {
     getPokemon();
-  }, [offset]);
+  }, [offset]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (pokemon.length) {
-      pokemon.map((pokemon) => {
+      pokemon.forEach(pokemon => {
         getPokemonData(pokemon.name);
-      })
+      });
     }
     else {
       if (!search && allPokemon.length) {
         setPokemon([...allPokemon.slice(0,offset)])
       }
     }
-  }, [pokemon]);
+  }, [pokemon]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     getAllPokemon();
@@ -53,13 +53,13 @@ function App() {
   }, [allPokemon]);
 
   useEffect(() => {
-    TYPES.map((type) => {
+    TYPES.forEach((type) => {
       updatePokemonByType(type);
     })
   }, [])
 
   useEffect(() => {
-    [...Array(GENERATIONS).keys()].map((i) => {
+    [...Array(GENERATIONS).keys()].forEach((i) => {
       const gen = i + 1;
       updatePokemonByGen(gen);
     });
@@ -99,7 +99,7 @@ function App() {
         setPokemon([...result]);
       }
     }
-  }, [search]);
+  }, [search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!activeGen && !activeType) {
@@ -117,7 +117,7 @@ function App() {
       })
     }
     setPokemon([...filteredPokemon]);
-  }, [activeGen, activeType])
+  }, [activeGen, activeType]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getPokemon = async () => {
     if (allPokemon.length > offset + limit) {
@@ -159,18 +159,18 @@ function App() {
   const updatePokemonByType = async (type) => {
     let list = [];
     const data = await P.getTypeByName(type);
-    data.pokemon.map((pokemon) => {
+    data.pokemon.forEach((pokemon) => {
       list.push(pokemon.pokemon.name);
-    })
+    });
     setPokemonByType((prevState) => ({...prevState, [type]: list}))
   }
 
   const updatePokemonByGen = async (gen) => {
     const data = await P.getGenerationByName(gen);
     let names = [];
-    data.pokemon_species.map((pokemon) => {
+    data.pokemon_species.forEach((pokemon) => {
       names.push(pokemon.name)
-    })
+    });
     setPokemonByGeneration((prevState) => ({...prevState, [gen]: names}))
   }
 
@@ -192,6 +192,7 @@ function App() {
         {pokemon.length ? pokemon.map((pokemon, index) => (
           !!pokemonData[pokemon.name] ?
             <Card
+              key={pokemon.name}
               details={!!pokemonData[pokemon.name] ? pokemonData[pokemon.name] : null}
             /> : null
         )) : null}
