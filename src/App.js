@@ -96,38 +96,25 @@ function App() {
         const result = allPokemon.filter((pokemon, index) => {
           return pokemon.name.includes(search.toLowerCase()) || (index + 1).toString().includes(search);
         });
-        console.log(result);
         setPokemon([...result]);
       }
     }
   }, [search]);
 
-  // refactor this, wtf are you doing
   useEffect(() => {
     if (!activeGen && !activeType) {
       return;
     }
-    let filteredPokemon = [];
+    let filteredPokemon = [...allPokemon];
     if (activeGen) {
-      allPokemon.map((pokemon) => {
-        if (pokemonByGeneration[activeGen].includes(pokemon.name)) {
-          filteredPokemon.push(pokemon);
-        }
+      filteredPokemon = filteredPokemon.filter((pokemon) => {
+        return pokemonByGeneration[activeGen].includes(pokemon.name)
       })
     }
     if (activeType) {
-      if (filteredPokemon.length) {
-        filteredPokemon = filteredPokemon.filter((pokemon) => {
-          return pokemonByType[activeType].includes(pokemon.name)
-        })
-      }
-      else {
-        allPokemon.map((pokemon) => {
-          if (pokemonByType[activeType].includes(pokemon.name)) {
-            filteredPokemon.push(pokemon);
-          }
-        })
-      }
+      filteredPokemon = filteredPokemon.filter((pokemon) => {
+        return pokemonByType[activeType].includes(pokemon.name)
+      })
     }
     setPokemon([...filteredPokemon]);
   }, [activeGen, activeType])
