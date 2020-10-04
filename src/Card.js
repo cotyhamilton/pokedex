@@ -1,13 +1,13 @@
 import React from 'react';
-import { IMG_DETAIL_URL } from './config'
-import './Card.css'
+import { IMG_DETAIL_URL } from './config';
+import './Card.css';
 
 const synth = window.speechSynthesis;
 
-function Card ({details}) {
+function Card ({details, click}) {
     const utterThis = new SpeechSynthesisUtterance(details.name);
     return (
-        <div className={`card ${details.types[0].type.name}`}>
+        <div onClick={() => {click(details)}} className={`card ${details.types[0].type.name}`}>
             <div className="details">
                 <div>
                     <p className="id">{`#${details.id}`}</p>

@@ -5,6 +5,7 @@ import { Icon, Input } from 'semantic-ui-react';
 import Worker from 'workerize-loader!./workers/Worker'; // eslint-disable-line import/no-webpack-loader-syntax
 import WorkerPool from './workers/WorkerPool';
 import { TYPES, GENERATIONS } from './lib/constants';
+import Details from './Details';
 
 const Pokedex = require('pokeapi-js-wrapper');
 const P = new Pokedex.Pokedex();
@@ -22,6 +23,7 @@ function App() {
   const [pokemonByGeneration, setPokemonByGeneration] = useState({});
   const [activeType, setActiveType] = useState('');
   const [activeGen, setActiveGen] = useState('');
+  const [displayPokemon, setDisplayPokemon] = useState('');
 
   useEffect(() => {
     getPokemon();
@@ -176,32 +178,39 @@ function App() {
 
   return (
     <div className="App">
-      <header>
-        <Icon className="icon" name="sliders" size="large" />
-      </header>
-      <div className="home">
-        <h1>Pokédex</h1>
-        <p>Search for Pokémon by name, National Pokédex number, or tags like <code>type:grass gen:5</code></p>
-        <Input
-          fluid
-          icon="search"
-          iconPosition="left"
-          placeholder="What Pokémon are you looking for?"
-          onChange={handleChange}
-        />
-        {pokemon.length ? pokemon.map((pokemon, index) => (
-          !!pokemonData[pokemon.name] ?
-            <Card
-              key={pokemon.name}
-              details={!!pokemonData[pokemon.name] ? pokemonData[pokemon.name] : null}
-            /> : null
-        )) : null}
-      </div>
-      {search === '' ?
-        <div className="page-navigation">
-          <span onClick={loadMore}>more</span>
+      <div className="Container">
+      {!!displayPokemon ? <Details details={displayPokemon} /> : 
+        <>
+          <header>
+            <Icon className="icon" name="sliders" size="large" />
+          </header>
+          <div className="home">
+            <h1>Pokédex</h1>
+            <p>Search for Pokémon by name, National Pokédex number, or tags like <code>type:grass gen:5</code></p>
+            <Input
+              fluid
+              icon="search"
+              iconPosition="left"
+              placeholder="What Pokémon are you looking for?"
+              onChange={handleChange}
+            />
+            {pokemon.length ? pokemon.map((pokemon, index) => (
+              !!pokemonData[pokemon.name] ?
+                <Card
+                  click={setDisplayPokemon}
+                  key={pokemon.name}
+                  details={!!pokemonData[pokemon.name] ? pokemonData[pokemon.name] : null}
+                /> : null
+            )) : null}
+          </div>
+          {search === '' ?
+            <div className="page-navigation">
+              <span onClick={loadMore}>more</span>
+            </div>
+            : null}
+          </>
+          }
         </div>
-        : null}
     </div>
   );
 }
