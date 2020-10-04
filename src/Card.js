@@ -14,12 +14,12 @@ function Card ({details}) {
                     <p className="name" onClick={() => {synth.speak(utterThis);}}>{details.name}</p>
                     <div className="types">
                         {details.types.map((type) => (
-                            <span className={`type ${type.type.name}`}>⬤</span>
+                            <span key={type.type.name} className={`type ${type.type.name}`}>⬤</span>
                         ))}
                     </div>
                 </div>
             </div>
-            {details.id >= 10000 ? null : <img className="img" src={`${IMG_DETAIL_URL}/${details.id}.png`} />}
+            {details.id >= 10000 ? null : <img alt={details.name} className="img" src={`${IMG_DETAIL_URL}/${details.id}.png`} />}
         </div>
     );
 }
